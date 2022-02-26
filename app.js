@@ -15,21 +15,21 @@ const mysqlDb = require("./databases/mysql/mysql");
 //   "multipleStatements": true
 // };
 
-// const mysql = {
-//   "host": "bextnjcoouvetbmyu25w-mysql.services.clever-cloud.com",
-//   "user": "uxxc34znr3dyvzh3",
-//   "password": "ShAU9Rz1cRXmvcsjzxah",
-//   "database": "bextnjcoouvetbmyu25w",
-//   "multipleStatements": true
-// };
-
 const mysql = {
-  "host": "localhost",
-  "user": "root",
-  "password": "123456",
-  "database": "shridb",
+  "host": "bextnjcoouvetbmyu25w-mysql.services.clever-cloud.com",
+  "user": "uxxc34znr3dyvzh3",
+  "password": "ShAU9Rz1cRXmvcsjzxah",
+  "database": "bextnjcoouvetbmyu25w",
   "multipleStatements": true
 };
+
+// const mysql = {
+//   "host": "localhost",
+//   "user": "root",
+//   "password": "123456",
+//   "database": "shridb",
+//   "multipleStatements": true
+// };
 
 const indexRoutes = require("./modules/index/index");
 const insertRoutes = require("./modules/insert/index")
