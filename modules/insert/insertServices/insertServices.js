@@ -1,6 +1,9 @@
 
 const { push } = require('joi/lib/ref');
 let mysqlService = require('../../../databases/mysql/mysql');
+let config = require('./../../../config')
+let fs = require("fs")
+const AWS = require('aws-sdk');
 
   function addBulkKingdom(opts) {
     try {
@@ -75,8 +78,6 @@ let mysqlService = require('../../../databases/mysql/mysql');
       throw error;
     }
   }
-
-
 
   
 module.exports = {

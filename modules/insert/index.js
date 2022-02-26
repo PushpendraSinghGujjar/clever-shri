@@ -32,14 +32,17 @@ router.post(
 
 router.post(
     "/addLiterature",
-    // multipartMiddleware,
-    upload.array("file"),
+    multipartMiddleware,
+    // upload.array("file"),
     insertController.addLiterature
 )
 
-
-
-
+router.post(
+  "/uploadImage",
+  multipartMiddleware,
+  // upload.array("file"),
+  insertController.uploadImage
+)
 
 
 module.exports = router;
