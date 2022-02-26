@@ -22,7 +22,7 @@ const mysql = {
   "database": "bextnjcoouvetbmyu25w",
   "multipleStatements": true
 };
-
+let x ="d";
 // const mysql = {
 //   "host": "localhost",
 //   "user": "root",
