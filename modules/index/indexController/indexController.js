@@ -139,6 +139,19 @@ async function getData(req, res) {
     }
   }
 
+  async function getGeofence(req,res){
+    try {
+      console.log("QUERY", req.query)
+
+      let data = await indexService.getGeofence(req.query);
+      return responses.sendCustomSuccessResponse(res, language, data);
+    
+    } catch (error) {
+      logg.logError("error_while_getting_data", error);
+      return responses.sendCustomErrorResponse(res, language);
+    }
+  }
+
 
   module.exports = {
       getData,
@@ -150,5 +163,6 @@ async function getData(req, res) {
       getKingdomsByYear,
       getMaps,
       getKingdomWithRulers,
-      getLiterature
+      getLiterature,
+      getGeofence
   }

@@ -42,7 +42,7 @@ app.use(express.json());
 let patho = app.use('/public/uploads', express.static(path.join(__dirname, '/public/uploads')));
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-console.log("***", patho)
+// console.log("***", patho)
 
 // app.use(express.urlencoded({extended:true}));
 
@@ -81,5 +81,5 @@ app.use("/api/insert", insertRoutes)
 
 
 app.listen(port, () => {
-  console.log(`the server is up and running on port: ${port} `);
+  console.log(`*********************************************************${port}********************************************************* `);
 })

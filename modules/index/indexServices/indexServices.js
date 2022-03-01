@@ -189,6 +189,22 @@ function getData(opts) {
     }
   }
 
+  function getGeofence(opts) {
+    try {
+      let params = [];
+      let sql = `SELECT * FROM tb_geofence where 1`;
+
+     if(opts.search){
+       sql += ` and kingdom = ?`
+       params.push(opts.search);
+     }
+
+      return mysqlService.runMysqlQueryPromisified("GETTING_LITERATURE_DATA", sql, params);
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
 module.exports = {
     getData,
@@ -200,5 +216,6 @@ module.exports = {
     getKingdomsByYear,
     getMaps,
     getKingdomWithRulers,
-    getLiterature
+    getLiterature,
+    getGeofence
 }

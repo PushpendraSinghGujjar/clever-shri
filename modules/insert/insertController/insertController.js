@@ -102,11 +102,48 @@ async function uploadImage(req, res) {
   }
 }
 
+async function addGeofence(req, res) {
+
+  try {
+
+    req.body.latitude ? req.body.latitude : req.body.latitude = null;
+    req.body.longitude ? req.body.longitude : req.body.longitude = null;
+
+    let geofence = "POLYGON((";
+    geoLongLat = req.body.latLong.forEach((co) => {
+      geofence +=
+        JSON.stringify(co).replace(",", " ").replace("]", "").replace("[", "") +
+        ",";
+    });
+    geofence = geofence.slice(0, geofence.length - 1) + "))";
+
+    logg.log("GEO_LAT_LONG_AFTER=>", geofence);
+    req.body.latLong = geofence;
+
+
+    let data = await insertServices.addGeofence(req.body);
+
+    if (!data.insertId) {
+      return responses.sendCustomErrorResponse(res, language,
+        constants.responseCodes.COMMON_ERROR_CODE,
+        constants.commonResponseMessages.ACTION_FAILED);
+    }
+
+    // let descdata = await insertServices.addKingdomDesc(req.body);
+
+    return responses.sendCustomSuccessResponse(res, language, "success");
+
+  } catch (error) {
+    logg.logError("error_while_getting_data", error);
+    return responses.sendCustomErrorResponse(res, language);
+  }
+}
+
 
 module.exports = {
   addBulkKingdom,
   addLiterature,
   addKingdom,
-  uploadImage
-
+  uploadImage,
+  addGeofence
 }

@@ -79,10 +79,30 @@ const AWS = require('aws-sdk');
     }
   }
 
+  function addGeofence(opts) {
+    try {
+        console.log("OPT_ADD_KINGDOM ",opts)
+        let params = [];
+
+      let sql = "insert into tb_geofence (kingdom,latLong,latitude,longitude) VALUES (?,ST_GeomFromText(?),?,?)";
+      params.push(opts.kingdom);
+      params.push(opts.latLong);
+      params.push(opts.latitude);
+      params.push(opts.longitude);
+
+      return mysqlService.runMysqlQueryPromisified("ADDING_DATA", sql, params);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+
   
 module.exports = {
   addBulkKingdom,
     addLiterature,
     addKingdom,
-    addKingdomDesc
+    addKingdomDesc,
+    addGeofence
 }

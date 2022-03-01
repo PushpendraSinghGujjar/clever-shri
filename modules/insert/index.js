@@ -44,5 +44,11 @@ router.post(
   insertController.uploadImage
 )
 
+router.post(
+  "/addGeofence",
+  // indexValidator.addKingdom,
+  insertController.addGeofence
+)
+
 
 module.exports = router;

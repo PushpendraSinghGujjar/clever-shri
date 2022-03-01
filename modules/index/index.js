@@ -86,6 +86,11 @@ router.get(
   indexController.getLiterature
 )
 
+router.get(
+  "/getGeofence",
+
+  indexController.getGeofence
+)
 
 
 module.exports = router;
