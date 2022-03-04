@@ -75,7 +75,7 @@ app.get('/', (req, res, next) => {
 
 
 
-// app.use("/api/index", indexRoutes);
+app.use("/api/index", indexRoutes);
 app.use("/api/insert", insertRoutes)
 
 
