@@ -18,16 +18,22 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-router.post(
-    "/addBulkKingdom",
-    // indexValidator.addKingdom,
-    insertController.addBulkKingdom
-)
+// router.post(
+//     "/addBulkKingdom",
+//     // indexValidator.addKingdom,
+//     insertController.addBulkKingdom
+// )
 
 router.post(
   "/addKingdom",
   // indexValidator.addKingdom,
   insertController.addKingdom
+)
+
+router.post(
+  "/addRuler",
+  // indexValidator.addKingdom,
+  insertController.addRuler
 )
 
 router.post(
@@ -37,12 +43,14 @@ router.post(
     insertController.addLiterature
 )
 
-router.post(
-  "/uploadImage",
-  multipartMiddleware,
-  // upload.array("file"),
-  insertController.uploadImage
-)
+// router.post(
+//   "/uploadImage",
+//   multipartMiddleware,
+//   // upload.array("file"),
+//   insertController.uploadImage
+// )
+
+
 
 router.post(
   "/addGeofence",

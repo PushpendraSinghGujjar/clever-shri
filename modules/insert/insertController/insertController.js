@@ -80,6 +80,28 @@ async function addKingdom(req, res) {
   }
 }
 
+async function addRuler(req, res) {
+
+  try {
+
+    let data = await insertServices.addRuler(req.body);
+
+    if (!data.insertId) {
+      return responses.sendCustomErrorResponse(res, language,
+        constants.responseCodes.COMMON_ERROR_CODE,
+        constants.commonResponseMessages.ACTION_FAILED);
+    }
+
+    let descdata = await insertServices.addRulerDesc(req.body);
+
+    return responses.sendCustomSuccessResponse(res, language, {data, descdata});
+
+  } catch (error) {
+    logg.logError("error_while_getting_data", error);
+    return responses.sendCustomErrorResponse(res, language);
+  }
+}
+
 async function uploadImage(req, res) {
 
   try {
@@ -144,6 +166,7 @@ module.exports = {
   addBulkKingdom,
   addLiterature,
   addKingdom,
+  addRuler,
   uploadImage,
   addGeofence
 }

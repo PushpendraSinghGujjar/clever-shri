@@ -79,6 +79,41 @@ const AWS = require('aws-sdk');
     }
   }
 
+  function addRuler(opts) {
+    try {
+        console.log("OPT_ADD_RULER ",opts)
+        let params = [];
+
+      let sql = "insert into tb_rulers (ruler,kingdom,startYear,endYear) VALUES (?,?,?,?)";
+      params.push(opts.ruler);
+      params.push(opts.kingdom);
+      params.push(opts.startYear);
+      params.push(opts.endYear);
+
+      return mysqlService.runMysqlQueryPromisified("ADDING_DATA", sql, params);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  function addRulerDesc(opts) {
+    try {
+        console.log("OPT_ADD_RULER_DESC ",opts)
+        let params = [];
+
+      let sql = "insert into tb_ruler_desc (ruler,image,`desc`) VALUES (?,?,?)";
+      params.push(opts.ruler);
+      params.push(opts.imageUrl);
+      params.push(opts.description);
+
+
+      return mysqlService.runMysqlQueryPromisified("ADDING_KINGDOM_DESC", sql, params);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
   function addGeofence(opts) {
     try {
         console.log("OPT_ADD_KINGDOM ",opts)
@@ -104,5 +139,7 @@ module.exports = {
     addLiterature,
     addKingdom,
     addKingdomDesc,
+    addRuler,
+    addRulerDesc,
     addGeofence
 }
