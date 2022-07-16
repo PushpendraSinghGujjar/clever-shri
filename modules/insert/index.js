@@ -58,5 +58,11 @@ router.post(
   insertController.addGeofence
 )
 
+router.post(
+  "/register",
+  // indexValidator.addKingdom,
+  insertController.register
+)
+
 
 module.exports = router;

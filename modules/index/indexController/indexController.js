@@ -2,9 +2,13 @@
 const logg = require('../../../services/logging');
 
 const responses = require("../../../services/responses")
-const indexService = require("../indexServices/indexServices")
+const indexService = require("../indexServices/indexServices");
+const insertServices = require("../../insert/insertServices/insertServices")
 
 const language = "en";
+
+//socket
+const socketService = require("../../../services/socketService")
 
 async function getData(req, res) {
    
@@ -152,6 +156,69 @@ async function getData(req, res) {
     }
   }
 
+  async function socket_test(req,res){
+    try {
+      console.log("QUERY", req.query)
+
+      socketService.emitSocket("createdSocket", {name: "pushpendra", age: 21, address: "Agra"});
+      // socketService.listenSocket("createdSocket")
+      console.log("socket complete")
+
+      return responses.sendCustomSuccessResponse(res, language, {data: "success"});
+    
+    } catch (error) {
+      logg.logError("error in socket", error);
+      return responses.sendCustomErrorResponse(res, language);
+    }
+  }
+
+  async function login(req,res){
+    try {
+     console.log("query", req.query)
+     console.log("specific",typeof(req.query.latitude))
+       
+     let prevdata = await insertServices.getUserdata(req.query);
+
+      let update = await insertServices.updateUsersData({id:prevdata[0].id, isLoggedin: 1, latitude: parseFloat(req.query.latitude), longitude: parseFloat(req.query.longitude)})
+
+      let data = await insertServices.getUserdata(req.query);
+
+      socketService.emitSocket("login", data[0]);
+      return responses.sendCustomSuccessResponse(res, language, data);
+    
+      
+    } catch (error) {
+      logg.logError("error_while_getting_data", error);
+      return responses.sendCustomErrorResponse(res, language);
+    }
+  }
+
+  async function logout(req,res){
+    try {
+
+      let update = await insertServices.updateUsersData({id:req.body.id, isLoggedin: req.body.isLoggedin})
+
+      return responses.sendCustomSuccessResponse(res, language, {});
+    
+      
+    } catch (error) {
+      logg.logError("error_while_getting_data", error);
+      return responses.sendCustomErrorResponse(res, language);
+    }
+  }
+
+  async function getAllUsersData(req,res){
+    try {
+
+      let data = await insertServices.getUserdata(req.query);
+      return responses.sendCustomSuccessResponse(res, language, data);
+    
+    } catch (error) {
+      logg.logError("error_while_getting_data", error);
+      return responses.sendCustomErrorResponse(res, language);
+    }
+  }
+
 
   module.exports = {
       getData,
@@ -164,5 +231,9 @@ async function getData(req, res) {
       getMaps,
       getKingdomWithRulers,
       getLiterature,
-      getGeofence
+      getGeofence,
+      socket_test,
+      login,
+      logout,
+      getAllUsersData
   }

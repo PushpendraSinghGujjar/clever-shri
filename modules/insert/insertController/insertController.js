@@ -161,6 +161,28 @@ async function addGeofence(req, res) {
   }
 }
 
+async function register(req, res) {
+
+  try {
+
+    let data = await insertServices.register(req.body);
+
+    if (!data.insertId) {
+      return responses.sendCustomErrorResponse(res, language,
+        constants.responseCodes.COMMON_ERROR_CODE,
+        constants.commonResponseMessages.ACTION_FAILED);
+    }
+
+    let userdata = await insertServices.getUserdata({id: data.insertId})
+
+    return responses.sendCustomSuccessResponse(res, language, {userdata});
+
+  } catch (error) {
+    logg.logError("error_while_getting_data", error);
+    return responses.sendCustomErrorResponse(res, language);
+  }
+}
+
 
 module.exports = {
   addBulkKingdom,
@@ -168,5 +190,6 @@ module.exports = {
   addKingdom,
   addRuler,
   uploadImage,
-  addGeofence
+  addGeofence,
+  register
 }

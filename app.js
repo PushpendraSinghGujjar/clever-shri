@@ -1,8 +1,9 @@
 const express = require('express');
-
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 const cors = require('cors');
-
 const path = require('path');
+
 const app = express();
 const port = process.env.PORT || 8080;
 const mysqlDb = require("./databases/mysql/mysql");
@@ -36,13 +37,15 @@ const insertRoutes = require("./modules/insert/index")
 const { urlencoded } = require('express');
 
 
-app.use(cors());
+// app.use(cors());
+app.options('*', cors())
 app.use(express.json());
 
 let patho = app.use('/public/uploads', express.static(path.join(__dirname, '/public/uploads')));
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // console.log("***", patho)
+
 
 // app.use(express.urlencoded({extended:true}));
 
@@ -78,8 +81,26 @@ app.get('/', (req, res, next) => {
 app.use("/api/index", indexRoutes);
 app.use("/api/insert", insertRoutes)
 
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
+io.on("connection", (socket) => {
+  // io.emit("connection", {data: "Sunday"});
+  socket.on("createdSocket", (data) => {
+    console.log("dvhfagdh", data)
+    io.emit("check", {data: "Sunday"});
+  })
+
+  socket.on("login", (data) => {
+    console.log("dvhfagdh", data)
+    io.emit("login", data);
+  })
+
+  console.log("socket connected", socket.id)
+});
 
 
-app.listen(port, () => {
+
+httpServer.listen(port, () => {
   console.log(`*********************************************************${port}********************************************************* `);
 })

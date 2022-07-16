@@ -92,5 +92,29 @@ router.get(
   indexController.getGeofence
 )
 
+router.get(
+  "/socket-test",
+
+  indexController.socket_test
+)
+
+router.get(
+  "/login",
+
+  indexController.login
+)
+
+router.put(
+  "/logout",
+
+  indexController.logout
+)
+
+router.get(
+  "/getAllUsersData",
+
+  indexController.getAllUsersData
+)
+
 
 module.exports = router;

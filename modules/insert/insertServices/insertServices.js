@@ -131,7 +131,64 @@ const AWS = require('aws-sdk');
     }
   }
 
+  function register(opts) {
+    try {
+        console.log("OPTS_REGISTER ",opts)
+        let params = [];
 
+      let sql = "insert into tb_users (username,email,password) VALUES (?,?,?)";
+      params.push(opts.username);
+      params.push(opts.email);
+      params.push(opts.password);
+
+      return mysqlService.runMysqlQueryPromisified("ADDING_DATA", sql, params);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  function getUserdata(opts) {
+    try {
+      let params = [];
+      let sql = `SELECT * FROM tb_users where 1`;
+
+     if(opts.id){
+       sql += ` and id = ?`
+       params.push(opts.id);
+     }
+     if(opts.email){
+        sql += ` and email = ?`
+        params.push(opts.email)
+     }
+     if(opts.password){
+        sql += ` and password = ?`
+        params.push(opts.password)
+     }
+     if(opts.isLoggedin){
+      sql += ` and isLoggedin = ?`
+      params.push(opts.isLoggedin);
+     }
+
+      return mysqlService.runMysqlQueryPromisified("GETTING_DATA", sql, params);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  function updateUsersData(opts) {
+    try {
+      let obj = {};
+
+      opts.hasOwnProperty("isLoggedin") ? obj.isLoggedin = opts.isLoggedin : 0; 
+      opts.latitude ? obj.latitude = opts.latitude : 0;
+      opts.longitude ? obj.longitude = opts.longitude : 0;
+      let sql = `UPDATE tb_users set ? where id = ?`;
+
+      return mysqlService.runMysqlQueryPromisified("GETTING_DATA", sql, [obj, opts.id]);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   
 module.exports = {
@@ -141,5 +198,8 @@ module.exports = {
     addKingdomDesc,
     addRuler,
     addRulerDesc,
-    addGeofence
+    addGeofence,
+    register,
+    getUserdata,
+    updateUsersData
 }
